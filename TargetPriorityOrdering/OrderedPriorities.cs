@@ -1,4 +1,4 @@
-using BepInEx;
+﻿using BepInEx;
 using System.Collections.Generic;
 using UnityEngine;
 using GO = UnityEngine.GameObject;
@@ -13,7 +13,7 @@ namespace TargetPriorityOrdering
 
         public static void AddCustomPriority(PriorityHandler priorityHandler)
         {
-            var index = (Tower.Priority) (10 + prioritisers.Count);
+            var index = (Tower.Priority)(10 + prioritisers.Count);
             prioritisers.Add(index, priorityHandler);
         }
 
@@ -43,7 +43,7 @@ namespace TargetPriorityOrdering
         private void extendTowerPriority(On.Tower.orig_TogglePriority orig, Tower self, int index, int direction)
         {
             int max = 10 + prioritisers.Count;
-            self.priorities[index] = (Tower.Priority) (((int) self.priorities[index] + direction % max + max) % max);
+            self.priorities[index] = (Tower.Priority)(((int)self.priorities[index] + direction % max + max) % max);
         }
 
         private void fixTowerPriorityDown(On.TowerUI.orig_TogglePriorityDown orig, TowerUI self, int index)
@@ -60,11 +60,11 @@ namespace TargetPriorityOrdering
 
         private void FixText(TowerUI UI, int index)
         {
-            
+
             var prio = UI.myTower.priorities[index];
             if (prioritisers.ContainsKey(prio))
             {
-                UI.priorityTexts[index].text = prioritisers[prio].CustomPriority.Name;
+                UI.priorityTexts[index].text = prioritisers[prio].Name;
             }
         }
 
@@ -134,7 +134,7 @@ namespace TargetPriorityOrdering
                         best = score;
                         optimalList.Clear();
                     }
-                    
+
                     if (Mathf.Approximately(score, best))
                     {
                         optimalList.Add(target);
