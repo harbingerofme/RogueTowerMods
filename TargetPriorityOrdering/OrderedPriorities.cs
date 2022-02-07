@@ -5,7 +5,7 @@ using GO = UnityEngine.GameObject;
 
 namespace TargetPriorityOrdering
 {
-    [BepInPlugin("harbingerofme.TargetPriorityOrdering", "Ordered Priorities", "1.0.0")]
+    [BepInPlugin("harbingerOfMe.TargetPriorityOrdering", "Ordered Priorities", "1.1.0")]
     public class OrderedPriorities : BaseUnityPlugin
     {
 
