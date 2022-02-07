@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using System.Collections.Generic;
 using UnityEngine;
 using GO = UnityEngine.GameObject;
@@ -72,8 +72,8 @@ namespace TargetPriorityOrdering
         {
             List<PrioritiserTarget> targets = new List<Collider>(possibleTargets)
                 .ConvertAll(
-                    (Collider c) => 
-                    new PrioritiserTarget(c, c.GetComponent<Enemy>(), c.GetComponent<Pathfinder>())
+                    (Collider c) =>
+                    new PrioritiserTarget(self, c, c.GetComponent<Enemy>(), c.GetComponent<Pathfinder>())
                 );
 
             const float maxinum = 1f;

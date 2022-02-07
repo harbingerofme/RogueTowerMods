@@ -9,8 +9,11 @@ namespace TargetPriorityOrdering
         public Pathfinder pathfinder;
         public Enemy enemy;
 
-        public PrioritiserTarget(Collider collider, Enemy enemy, Pathfinder pathfinder)
+        public Tower tower;
+
+        public PrioritiserTarget(Tower tower, Collider collider, Enemy enemy, Pathfinder pathfinder)
         {
+            this.tower = tower;
             this.collider = collider;
             this.enemy = enemy;
             this.pathfinder = pathfinder;

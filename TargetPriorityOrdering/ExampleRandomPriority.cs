@@ -2,12 +2,8 @@
 {
     internal class ExampleRandomPriority : PriorityHandler
     {
-        public ExampleRandomPriority()
-        {
-            this.CustomPriority = new CustomPriority("Random");
-        }
-        
-        public override CustomPriority CustomPriority { get; set; }
+
+        public override string Name => "Random";
 
         public override float GetPriorityForTarget(PrioritiserTarget prioritiserTarget)
         {

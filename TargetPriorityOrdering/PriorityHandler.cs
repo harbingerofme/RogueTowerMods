@@ -4,6 +4,6 @@
     {
         public abstract float GetPriorityForTarget(PrioritiserTarget prioritiserTarget);
 
-        public abstract CustomPriority CustomPriority { get; set; }
+        public abstract string Name { get; }
     }
 }
