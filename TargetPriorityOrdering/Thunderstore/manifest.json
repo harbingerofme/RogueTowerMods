@@ -1,0 +1,9 @@
+{
+    "name": "TargetPRiortyOrdering",
+    "version_number": "1.1.0",
+    "website_url": "https://github.com/harbingerofme/RogueTowerMods/tree/main/TargetPriorityOrdering",
+    "description": "Makes the priority order matter.",
+    "dependencies": [
+        "Harb-HookGenPatcher-1.2.1"
+    ]
+}
