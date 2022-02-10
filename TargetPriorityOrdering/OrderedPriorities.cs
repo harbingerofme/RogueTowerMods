@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using GO = UnityEngine.GameObject;
@@ -8,6 +9,9 @@ namespace TargetPriorityOrdering
     [BepInPlugin("harbingerOfMe.TargetPriorityOrdering", "Ordered Priorities", "1.1.0")]
     public class OrderedPriorities : BaseUnityPlugin
     {
+
+        private int basePriorityCount;
+        private int lastCompiledPriorityCount = (int)Tower.Priority.Marked + 1;
 
         private static readonly Dictionary<Tower.Priority, PriorityHandler> prioritisers = new Dictionary<Tower.Priority, PriorityHandler>();
 
@@ -20,6 +24,14 @@ namespace TargetPriorityOrdering
 
         private void Awake()
         {
+            basePriorityCount = Enum.GetValues(typeof(Tower.Priority)).Length;
+
+            if(basePriorityCount != lastCompiledPriorityCount)
+            {
+                Logger.LogWarning("Priorities in the game do not line up with priorities this mod was made for. Use at your own risk!");
+                Logger.LogDebug($"Expected {lastCompiledPriorityCount} priorities, got {basePriorityCount} instead!");
+            }
+
             On.Tower.SelectEnemy += orderedEnemySelection;
 
             On.TowerUI.TogglePriorityUp += fixTowerPriorityUp;
@@ -42,7 +54,7 @@ namespace TargetPriorityOrdering
 
         private void extendTowerPriority(On.Tower.orig_TogglePriority orig, Tower self, int index, int direction)
         {
-            int max = 10 + prioritisers.Count;
+            int max = basePriorityCount + prioritisers.Count;
             self.priorities[index] = (Tower.Priority)(((int)self.priorities[index] + direction % max + max) % max);
         }
 
@@ -125,6 +137,9 @@ namespace TargetPriorityOrdering
                                 break;
                             case Tower.Priority.Slowest:
                                 score /= Mathf.Max(maxinum, target.pathfinder.speed);
+                                break;
+                            case Tower.Priority.Marked:
+                                score *= target.enemy.mark != null ? 2f : 1f;
                                 break;
                         }
                     }
