@@ -351,3 +351,6 @@ MigrationBackup/
 
 # Copyrighted material
 libs/
+
+# Do not track buildoutput in thunderstore folders
+*/Thunderstore/*.dll

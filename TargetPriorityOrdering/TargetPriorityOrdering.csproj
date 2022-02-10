@@ -20,10 +20,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\libs\Assembly-CSharp-nstrip.dll</HintPath>
-      <CopyLocal>False</CopyLocal>
-    </Reference>
     <Reference Include="MMHOOK_Assembly-CSharp">
       <HintPath>..\libs\MMHOOK_Assembly-CSharp.dll</HintPath>
       <CopyLocal>False</CopyLocal>
