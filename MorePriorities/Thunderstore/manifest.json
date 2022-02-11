@@ -1,9 +1,9 @@
 {
     "name": "MorePriorities",
-    "version_number": "1.0.0",
+    "version_number": "1.1.0",
     "website_url": "https://github.com/harbingerofme/RogueTowerMods/tree/main/MorePriorities",
     "description": "Even more priorities.",
     "dependencies": [
-        "Harb-TargetPRiortyOrdering-1.1.0"
+        "Harb-TargetPRiortyOrdering-1.1.1"
     ]
 }
