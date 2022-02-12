@@ -1,0 +1,9 @@
+{
+  "name": "DisableTriumphs",
+  "version_number": "1.0.8",
+  "website_url": "",
+  "description": "Disable achievement gain",
+  "dependencies": [
+    "bbepis-BepInEx_Rogue_Tower-5.4.1900"
+  ]
+}
