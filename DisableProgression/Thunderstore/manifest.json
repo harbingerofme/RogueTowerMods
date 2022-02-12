@@ -1,6 +1,6 @@
 {
   "name": "DisableTriumphs",
-  "version_number": "1.0.8",
+  "version_number": "1.0.9",
   "website_url": "https://github.com/harbingerofme/RogueTowerMods/tree/main/DisableProgression",
   "description": "Disable achievement gain",
   "dependencies": [

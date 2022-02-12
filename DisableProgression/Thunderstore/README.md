@@ -8,4 +8,8 @@ It does, however, allow xp.
 For developers:
 
 add this to your manifest to have modmanagers automatically enable it.
-Use `[BepinDependency("DisableProgression", BepInDependency.DependencyFlags.HardDependency)]` at the top of your plugin class to prevent your mod loading without this mod installed.
+Use `[BepinDependency("Harb.DisableProgression", BepInDependency.DependencyFlags.HardDependency)]` at the top of your plugin class to prevent your mod loading without this mod installed.
+
+-- Changelog
+
+* 1.0.9 Fixed the GUID.
