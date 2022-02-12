@@ -1,19 +1,21 @@
-using BepInEx;
+﻿using BepInEx;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using GO = UnityEngine.GameObject;
 
 namespace TargetPriorityOrdering
 {
-    [BepInPlugin("harbingerOfMe.TargetPriorityOrdering", "Ordered Priorities", "1.1.0")]
+    [BepInPlugin("harbingerOfMe.TargetPriorityOrdering", "Ordered Priorities", "1.1.1")]
+    [BepInDependency("Harb.DisableProgression", BepInDependency.DependencyFlags.HardDependency)]
     public class OrderedPriorities : BaseUnityPlugin
     {
 
         private int basePriorityCount;
         private int lastCompiledPriorityCount = (int)Tower.Priority.Marked + 1;
 
-        private static readonly Dictionary<Tower.Priority, PriorityHandler> prioritisers = new Dictionary<Tower.Priority, PriorityHandler>();
+        private static readonly Dictionary<Tower.Priority, PriorityHandler> prioritisers = new();
 
         public static void AddCustomPriority(PriorityHandler priorityHandler)
         {
