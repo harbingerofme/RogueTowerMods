@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,7 +40,26 @@ namespace TargetPriorityOrdering
 
             On.Tower.TogglePriority += extendTowerPriority;
 
+            On.LevelLoader.Start += RewordPriorityTip;
+
             AddCustomPriority(new ExampleRandomPriority());
+        }
+
+        private void RewordPriorityTip(On.LevelLoader.orig_Start orig, LevelLoader self)
+        {
+            orig(self);
+
+            for(int i =0; i< self.tips.Length; i++)
+            {
+                string s = self.tips[i];
+                Regex prio = new("priorit", RegexOptions.IgnoreCase);
+                Regex order = new("order", RegexOptions.IgnoreCase);
+                if (prio.IsMatch(s) && order.IsMatch(s))
+                {
+                    self.tips[i] = "Priorities matter, and so does their order.";
+                }
+            }
+            
         }
 
         private void TowerUI_SetStats(On.TowerUI.orig_SetStats orig, TowerUI self, Tower myTower)
