@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -8,7 +8,6 @@ using GO = UnityEngine.GameObject;
 namespace TargetPriorityOrdering
 {
     [BepInPlugin("harbingerOfMe.TargetPriorityOrdering", "Ordered Priorities", "1.1.1")]
-    [BepInDependency("Harb.DisableProgression", BepInDependency.DependencyFlags.HardDependency)]
     public class OrderedPriorities : BaseUnityPlugin
     {
 
