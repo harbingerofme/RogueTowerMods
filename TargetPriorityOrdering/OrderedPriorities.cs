@@ -1,4 +1,4 @@
-using BepInEx;
+﻿using BepInEx;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -27,7 +27,7 @@ namespace TargetPriorityOrdering
         {
             basePriorityCount = Enum.GetValues(typeof(Tower.Priority)).Length;
 
-            if(basePriorityCount != lastCompiledPriorityCount)
+            if (basePriorityCount != lastCompiledPriorityCount)
             {
                 Logger.LogWarning("Priorities in the game do not line up with priorities this mod was made for. Use at your own risk!");
                 Logger.LogDebug($"Expected {lastCompiledPriorityCount} priorities, got {basePriorityCount} instead!");
@@ -50,7 +50,7 @@ namespace TargetPriorityOrdering
         {
             orig(self);
 
-            for(int i =0; i< self.tips.Length; i++)
+            for (int i = 0; i < self.tips.Length; i++)
             {
                 string s = self.tips[i];
                 Regex prio = new("priorit", RegexOptions.IgnoreCase);
@@ -60,7 +60,7 @@ namespace TargetPriorityOrdering
                     self.tips[i] = "Priorities matter, and so does their order.";
                 }
             }
-            
+
         }
 
         private void TowerUI_SetStats(On.TowerUI.orig_SetStats orig, TowerUI self, Tower myTower)
