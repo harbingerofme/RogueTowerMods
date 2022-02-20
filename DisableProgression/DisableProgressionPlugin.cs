@@ -1,6 +1,6 @@
 ﻿using BepInEx;
-using MonoMod.RuntimeDetour;
 using BepInEx.Configuration;
+using MonoMod.RuntimeDetour;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,7 +41,9 @@ namespace DisableProgression
                         if (parM == typeof(string))
                         {
                             hooks.Add(new Hook(method, stringM));
-                        } else if (parM == typeof(int)) {
+                        }
+                        else if (parM == typeof(int))
+                        {
                             hooks.Add(new Hook(method, intM));
                         }
                         break;
