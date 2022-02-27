@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using BepInEx.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -10,21 +11,41 @@ namespace TargetPriorityOrdering
     [BepInPlugin("harbingerOfMe.TargetPriorityOrdering", "Ordered Priorities", "1.1.1")]
     public class OrderedPriorities : BaseUnityPlugin
     {
-
+        private static ManualLogSource logger;
         private int basePriorityCount;
         private int lastCompiledPriorityCount = (int)Tower.Priority.Marked + 1;
 
         private static readonly Dictionary<Tower.Priority, PriorityHandler> prioritisers = new();
+        private static int customPrioritisersCount = 0;
 
         public static void AddCustomPriority(PriorityHandler priorityHandler)
         {
-            var index = (Tower.Priority)(10 + prioritisers.Count);
+            var index = (Tower.Priority)(Enum.GetValues(typeof(Tower.Priority)).Length + customPrioritisersCount);
             prioritisers.Add(index, priorityHandler);
+            customPrioritisersCount++;
         }
 
+        public static void OverwriteVanillaPriority(Tower.Priority priority, PriorityHandler newHandler, bool allowOverwritingPreviousOverwrites = false)
+        {
+            if (!Enum.IsDefined(typeof(Tower.Priority), priority))
+            {
+                throw new ArgumentException($"Failed to overwrite vanilla priority: Supplied priority ({priority}) is not a vanilla priority.", nameof(priority));
+            }
+            if (!allowOverwritingPreviousOverwrites && prioritisers.ContainsKey(priority))
+            {
+                logger.LogWarning($"Failed to overwrite vanilla priority ({Enum.GetName(typeof(Tower.Priority), priority)}): This priority " +
+                    $"has already been overwritten once before (potentially by another mod). Instead, a new priority is created. " +
+                    $"For Modders: If you intend to allow overwriting a previously overwritten vanilla priority, please set the argument " +
+                    $"`allowOverwritingPreviousOverwrites` of `OverwriteVanillaPriority` to true.");
+                AddCustomPriority(newHandler);
+                return;
+            }
+            prioritisers[priority] = newHandler;
+        }
 
         private void Awake()
         {
+            logger = Logger;
             basePriorityCount = Enum.GetValues(typeof(Tower.Priority)).Length;
 
             if (basePriorityCount != lastCompiledPriorityCount)
@@ -74,7 +95,7 @@ namespace TargetPriorityOrdering
 
         private void extendTowerPriority(On.Tower.orig_TogglePriority orig, Tower self, int index, int direction)
         {
-            int max = basePriorityCount + prioritisers.Count;
+            int max = basePriorityCount + customPrioritisersCount;
             self.priorities[index] = (Tower.Priority)(((int)self.priorities[index] + direction % max + max) % max);
         }
 
@@ -114,7 +135,7 @@ namespace TargetPriorityOrdering
             foreach (var priority in self.priorities)
             {
                 var optimalList = new List<PrioritiserTarget>();
-                var best = -1f;
+                var best = float.NegativeInfinity;
                 foreach (PrioritiserTarget target in targets)
                 {
                     float score = maxinum;
@@ -163,6 +184,8 @@ namespace TargetPriorityOrdering
                                 break;
                         }
                     }
+
+                    score = Mathf.Clamp(score, float.MinValue, float.MaxValue); // Handle infinities
 
                     if (score > best)
                     {
